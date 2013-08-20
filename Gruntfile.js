@@ -31,10 +31,25 @@ module.exports = function (grunt) {
         options: {
           livereload: true
         }
+      },
+      sass: {
+        files: [
+          'app/assets/styles/sass/**/*.{scss,sass}',
+          'app/assets/styles/sass/_partials/**/*.{scss,sass}'
+        ],
+        tasks: ['sass']
+      }
+    },
+
+    sass: {
+      all: {
+        files: {
+          'app/assets/styles/styles.css': 'app/assets/styles/sass/styles.scss'
+        }
       }
     }
 
-  });
+  })
 
-  grunt.registerTask('default', ['connect', 'open:dev', 'watch'])
+  grunt.registerTask('default', ['sass', 'connect', 'open:dev', 'watch'])
 }
