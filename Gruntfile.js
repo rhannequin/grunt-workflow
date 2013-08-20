@@ -12,12 +12,29 @@ module.exports = function (grunt) {
         options: {
           port: 3000,
           base: 'app',
-          keepalive: true
+          hostname: ''
+        }
+      }
+    },
+
+    open : {
+      dev : {
+        path: 'http://127.0.0.1:3000'
+      }
+    },
+
+    watch: {
+      livereload: {
+        files: [
+          'app/**/*.*'
+        ],
+        options: {
+          livereload: true
         }
       }
     }
 
   });
 
-  grunt.registerTask('default', ['connect'])
+  grunt.registerTask('default', ['connect', 'open:dev', 'watch'])
 }
