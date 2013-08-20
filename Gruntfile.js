@@ -7,6 +7,42 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    jshint: {
+      options: {
+        force: true,
+        curly: true,
+        eqeqeq: true,
+        immed: true,
+        latedef: true,
+        newcap: true,
+        noarg: true,
+        sub: true,
+        undef: true,
+        boss: true,
+        eqnull: true,
+        browser: true,
+        asi: true,
+        globals: {
+          console: true,
+          require: true,
+          module: true
+        }
+      },
+      files: [
+        'Gruntfile.js',
+        'package.json',
+        'app/assets/scripts/**/*.js'
+      ]
+    },
+
+    sass: {
+      all: {
+        files: {
+          'app/assets/styles/styles.css': 'app/assets/styles/sass/styles.scss'
+        }
+      }
+    },
+
     connect: {
       server: {
         options: {
@@ -38,18 +74,17 @@ module.exports = function (grunt) {
           'app/assets/styles/sass/_partials/**/*.{scss,sass}'
         ],
         tasks: ['sass']
-      }
-    },
-
-    sass: {
-      all: {
-        files: {
-          'app/assets/styles/styles.css': 'app/assets/styles/sass/styles.scss'
-        }
+      },
+      jshint: {
+        files: [
+          '*.js',
+          '*.json'
+        ],
+        tasks: ['jshint']
       }
     }
 
   })
 
-  grunt.registerTask('default', ['sass', 'connect', 'open:dev', 'watch'])
+  grunt.registerTask('default', ['sass', 'jshint', 'connect', 'open:dev', 'watch'])
 }
