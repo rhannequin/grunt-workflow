@@ -1,0 +1,17 @@
+{
+  "name": "grunt-workflow",
+  "version": "0.0.0",
+  "description": "Workflow and architecture to start a new frontend project with.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "git@github.com:rhannequin/grunt-workflow.git",
+  "author": "rhannequin",
+  "license": "MIT",
+  "devDependencies": {
+    "matchdep": "~0.1.2",
+    "grunt": "~0.4.1",
+    "bower": "~1.2.1"
+  }
+}
