@@ -38,13 +38,13 @@ module.exports = function (grunt) {
     sass: {
       all: {
         files: {
-          'app/assets/styles/styles.css': 'app/assets/styles/sass/styles.scss'
+          'app/assets/styles/app.css': 'app/assets/styles/sass/app.scss'
         }
       }
     },
 
     replace: {
-      dev: {
+      all: {
         options: {
           variables: {
             'livereload': '<script src="http://localhost:35729/livereload.js"></script>'
@@ -52,8 +52,20 @@ module.exports = function (grunt) {
           prefix: '@@'
         },
         files: [
-          {src: ['app/index.html'], dest: 'app/index.html'}
+          {src: ['app/index.html'], dest: 'dist/index.html'}
         ]
+      }
+    },
+
+    concat: {
+      options: {
+        separator: ';'
+      },
+      dev: {
+        files: {
+          'dist/assets/scripts/app.js': ['app/assets/scripts/**/*.js'],
+          'dist/assets/styles/app.css': ['app/assets/styles/**/*.css']
+        }
       }
     },
 
@@ -61,7 +73,7 @@ module.exports = function (grunt) {
       server: {
         options: {
           port: 3000,
-          base: 'app',
+          base: 'dist',
           hostname: ''
         }
       }
@@ -76,7 +88,7 @@ module.exports = function (grunt) {
     watch: {
       livereload: {
         files: [
-          'app/**/*.*'
+          'dist/**/*.*'
         ],
         options: {
           livereload: true
@@ -87,20 +99,23 @@ module.exports = function (grunt) {
           'app/assets/styles/sass/**/*.{scss,sass}',
           'app/assets/styles/sass/_partials/**/*.{scss,sass}'
         ],
-        tasks: ['sass']
+        tasks: ['styles']
       },
-      jshint: {
-        files: [
-          '*.js',
-          '*.json'
-        ],
-        tasks: ['jshint']
+      scripts: {
+        files: ['app/assets/scripts/**/*.js'],
+        tasks: ['scripts']
+      },
+      html: {
+        files: ['app/**/*.html'],
+        tasks: ['replace']
       }
     }
 
   })
 
-  grunt.registerTask('scripts', ['sass', 'jshint', 'replace:dev'])
-  grunt.registerTask('dev', ['scripts', 'connect', 'open:dev', 'watch'])
+  grunt.registerTask('styles', ['sass', 'concat:dev'])
+  grunt.registerTask('scripts', ['jshint', 'concat:dev'])
+  grunt.registerTask('statics', ['styles', 'scripts', 'replace'])
+  grunt.registerTask('dev', ['statics', 'concat:dev', 'connect', 'open:dev', 'watch'])
   grunt.registerTask('default', ['dev'])
 }
