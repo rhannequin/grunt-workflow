@@ -42,9 +42,18 @@ module.exports = function (grunt) {
     },
 
     replace: {
-      all: {
+      dev: {
         options: {
           variables: { 'livereload': '<script src="http://localhost:35729/livereload.js"></script>' },
+          prefix: '@@'
+        },
+        files: [
+          { src: ['app/index.html'], dest: 'dist/index.html' }
+        ]
+      },
+      build: {
+        options: {
+          variables: { 'livereload': '' },
           prefix: '@@'
         },
         files: [
@@ -54,12 +63,37 @@ module.exports = function (grunt) {
     },
 
     concat: {
-      options: { separator: ';' },
       dev: {
+        options: { separator: ';' },
         files: {
           'dist/assets/scripts/app.js': ['app/assets/scripts/**/*.js'],
           'dist/assets/styles/app.css': ['app/assets/styles/**/*.css']
         }
+      },
+      build: {
+        options: {
+          separator: ';'
+        },
+        files: {
+          'dist/assets/scripts/app.js': ['app/assets/scripts/**/*.js'],
+          'dist/assets/styles/app.css': ['app/assets/styles/**/*.css']
+        }
+      }
+    },
+
+    uglify: {
+      build: {
+        options: {
+          banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+            '<%= grunt.template.today("yyyy-mm-dd") %> */'
+        },
+        files: { 'dist/assets/scripts/app.js': ['dist/assets/scripts/**/*.js'] }
+      }
+    },
+
+    cssmin: {
+      build: {
+        files: { 'dist/assets/styles/app.css': ['dist/assets/styles/**/*.css'] }
       }
     },
 
@@ -91,7 +125,7 @@ module.exports = function (grunt) {
       },
       html: {
         files: ['app/**/*.html'],
-        tasks: ['replace']
+        tasks: ['replace:dev']
       }
     }
 
@@ -99,7 +133,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('styles', ['sass', 'concat:dev'])
   grunt.registerTask('scripts', ['jshint', 'concat:dev'])
-  grunt.registerTask('statics', ['styles', 'scripts', 'replace'])
-  grunt.registerTask('dev', ['statics', 'concat:dev', 'connect', 'open:dev', 'watch'])
+  grunt.registerTask('statics', ['styles', 'scripts'])
+
+  grunt.registerTask('dev', ['statics', 'replace:dev', 'connect', 'open:dev', 'watch'])
+  grunt.registerTask('build', ['statics', 'replace:build', 'concat:build', 'uglify:build', 'cssmin:build'])
   grunt.registerTask('default', ['dev'])
 }
