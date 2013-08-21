@@ -43,6 +43,20 @@ module.exports = function (grunt) {
       }
     },
 
+    replace: {
+      dev: {
+        options: {
+          variables: {
+            'livereload': '<script src="http://localhost:35729/livereload.js"></script>'
+          },
+          prefix: '@@'
+        },
+        files: [
+          {src: ['app/index.html'], dest: 'app/index.html'}
+        ]
+      }
+    },
+
     connect: {
       server: {
         options: {
@@ -86,5 +100,7 @@ module.exports = function (grunt) {
 
   })
 
-  grunt.registerTask('default', ['sass', 'jshint', 'connect', 'open:dev', 'watch'])
+  grunt.registerTask('scripts', ['sass', 'jshint', 'replace:dev'])
+  grunt.registerTask('dev', ['scripts', 'connect', 'open:dev', 'watch'])
+  grunt.registerTask('default', ['dev'])
 }

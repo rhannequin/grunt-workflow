@@ -17,6 +17,7 @@
     "grunt-open": "~0.2.2",
     "grunt-contrib-watch": "~0.5.2",
     "grunt-sass": "~0.6.1",
-    "grunt-contrib-jshint": "~0.6.3"
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-replace": "~0.4.4"
   }
 }
