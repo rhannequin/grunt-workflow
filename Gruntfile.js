@@ -37,30 +37,24 @@ module.exports = function (grunt) {
 
     sass: {
       all: {
-        files: {
-          'app/assets/styles/app.css': 'app/assets/styles/sass/app.scss'
-        }
+        files: { 'app/assets/styles/app.css': 'app/assets/styles/sass/app.scss' }
       }
     },
 
     replace: {
       all: {
         options: {
-          variables: {
-            'livereload': '<script src="http://localhost:35729/livereload.js"></script>'
-          },
+          variables: { 'livereload': '<script src="http://localhost:35729/livereload.js"></script>' },
           prefix: '@@'
         },
         files: [
-          {src: ['app/index.html'], dest: 'dist/index.html'}
+          { src: ['app/index.html'], dest: 'dist/index.html' }
         ]
       }
     },
 
     concat: {
-      options: {
-        separator: ';'
-      },
+      options: { separator: ';' },
       dev: {
         files: {
           'dist/assets/scripts/app.js': ['app/assets/scripts/**/*.js'],
@@ -71,28 +65,18 @@ module.exports = function (grunt) {
 
     connect: {
       server: {
-        options: {
-          port: 3000,
-          base: 'dist',
-          hostname: ''
-        }
+        options: { port: 3000, base: 'dist', hostname: '' }
       }
     },
 
     open : {
-      dev : {
-        path: 'http://127.0.0.1:3000'
-      }
+      dev : { path: 'http://127.0.0.1:3000' }
     },
 
     watch: {
       livereload: {
-        files: [
-          'dist/**/*.*'
-        ],
-        options: {
-          livereload: true
-        }
+        files: [ 'dist/**/*.*' ],
+        options: { livereload: true }
       },
       sass: {
         files: [
