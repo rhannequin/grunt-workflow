@@ -3,9 +3,12 @@ module.exports = function (grunt) {
 
   require('matchdep').filterAll('grunt-*').forEach(grunt.loadNpmTasks)
 
+  var config = grunt.file.readJSON('config.json')
+
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
+    config: config,
 
     jshint: {
       options: {
@@ -31,13 +34,16 @@ module.exports = function (grunt) {
       files: [
         'Gruntfile.js',
         'package.json',
-        'app/assets/scripts/**/*.js'
+        'config.json',
+        '<%= config.local.assets.scripts %>/**/*.js'
       ]
     },
 
     sass: {
       all: {
-        files: { 'app/assets/styles/app.css': 'app/assets/styles/sass/app.scss' }
+        files: {
+          '<%= config.local.assets.styles %>/app.css': '<%= config.local.assets.sass %>/app.scss'
+        }
       }
     },
 
@@ -48,7 +54,10 @@ module.exports = function (grunt) {
           prefix: '@@'
         },
         files: [
-          { src: ['app/index.html'], dest: 'dist/index.html' }
+          {
+            src: ['<%= config.local._ %>/index.html'],
+            dest: '<%= config.dist._ %>/index.html'
+          }
         ]
       },
       build: {
@@ -57,7 +66,10 @@ module.exports = function (grunt) {
           prefix: '@@'
         },
         files: [
-          { src: ['app/index.html'], dest: 'dist/index.html' }
+          {
+            src: ['<%= config.local._ %>/index.html'],
+            dest: '<%= config.dist._ %>/index.html'
+          }
         ]
       }
     },
@@ -66,17 +78,15 @@ module.exports = function (grunt) {
       dev: {
         options: { separator: ';' },
         files: {
-          'dist/assets/scripts/app.js': ['app/assets/scripts/**/*.js'],
-          'dist/assets/styles/app.css': ['app/assets/styles/**/*.css']
+          '<%= config.dist.assets.scripts %>/app.js': ['<%= config.local.assets.scripts %>/**/*.js'],
+          '<%= config.dist.assets.styles %>/app.css': ['<%= config.local.assets.styles %>/**/*.css']
         }
       },
       build: {
-        options: {
-          separator: ';'
-        },
+        options: { separator: ';' },
         files: {
-          'dist/assets/scripts/app.js': ['app/assets/scripts/**/*.js'],
-          'dist/assets/styles/app.css': ['app/assets/styles/**/*.css']
+          '<%= config.dist.assets.scripts %>/app.js': ['<%= config.local.assets.scripts %>/**/*.js'],
+          '<%= config.dist.assets.styles %>/app.css': ['<%= config.local.assets.styles %>/**/*.css']
         }
       }
     },
@@ -87,44 +97,44 @@ module.exports = function (grunt) {
           banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
             '<%= grunt.template.today("yyyy-mm-dd") %> */'
         },
-        files: { 'dist/assets/scripts/app.js': ['dist/assets/scripts/**/*.js'] }
+        files: { '<%= config.dist.assets.scripts %>/app.js': ['<%= config.dist.assets.scripts %>/**/*.js'] }
       }
     },
 
     cssmin: {
       build: {
-        files: { 'dist/assets/styles/app.css': ['dist/assets/styles/**/*.css'] }
+        files: { '<%= config.dist.assets.styles %>/app.css': ['<%= config.dist.assets.styles %>/**/*.css'] }
       }
     },
 
     connect: {
       server: {
-        options: { port: 3000, base: 'dist', hostname: '' }
+        options: { port: '<%= config.localhost.port %>', base: '<%= config.dist._ %>', hostname: '' }
       }
     },
 
     open : {
-      dev : { path: 'http://127.0.0.1:3000' }
+      dev : { path: '<%= config.localhost.hostname %>:<%= config.localhost.port %>' }
     },
 
     watch: {
       livereload: {
-        files: [ 'dist/**/*.*' ],
+        files: [ '<%= config.dist._ %>/**/*.*' ],
         options: { livereload: true }
       },
       sass: {
         files: [
-          'app/assets/styles/sass/**/*.{scss,sass}',
-          'app/assets/styles/sass/_partials/**/*.{scss,sass}'
+          '<%= config.local.assets.sass %>/**/*.{scss,sass}',
+          '<%= config.local.assets.sass %>/_partials/**/*.{scss,sass}'
         ],
         tasks: ['styles']
       },
       scripts: {
-        files: ['app/assets/scripts/**/*.js'],
+        files: ['<%= config.local.assets.scripts %>/**/*.js'],
         tasks: ['scripts']
       },
       html: {
-        files: ['app/**/*.html'],
+        files: ['<%= config.local._ %>/**/*.html'],
         tasks: ['replace:dev']
       }
     }

@@ -1,0 +1,24 @@
+{
+  "localhost": {
+    "hostname": "http://127.0.0.1",
+    "port": 3000
+  },
+  "local": {
+    "_": "app",
+    "assets": {
+      "_": "<%= config.local._ %>/assets",
+      "scripts": "<%= config.local.assets._ %>/scripts",
+      "styles": "<%= config.local.assets._ %>/styles",
+      "sass": "<%= config.local.assets.styles %>/sass"
+    }
+  },
+  "dist": {
+    "_": "dist",
+    "assets": {
+      "_": "<%= config.dist._ %>/assets",
+      "scripts": "<%= config.dist.assets._ %>/scripts",
+      "styles": "<%= config.dist.assets._ %>/styles",
+      "sass": "<%= config.dist.assets.styles %>/sass"
+    }
+  }
+}
