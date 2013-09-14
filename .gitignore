@@ -1,3 +1,4 @@
 node_modules/
 app/assets/styles/*.css
 dist/
+bower_components/

@@ -1,0 +1,21 @@
+{
+  "name": "grunt-workflow",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rhannequin/grunt-workflow",
+  "authors": [
+    "rhannequin <remy.hannequin@gmail.com>"
+  ],
+  "description": "Workflow and architecture to start a new frontend project with.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "zepto": "~1.0.0"
+  }
+}
