@@ -1,1 +1,37 @@
 @import '_partials/_fonts';
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background: none repeat scroll 0 0 #222222;
+  font-family: Helvetica, sans-serif;
+  font-size: 100%;
+}
+
+.container {
+  width: 90%;
+  background-color: #f2f2f2;
+  margin: 20px auto;
+  padding: 30px 10px;
+  border-radius: 5px;
+}
+
+h1, h2 {
+  margin: 0;
+  color: #92b82c;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.repo {
+  text-align: center;
+  a {
+    &:link, &:visited {
+      color: #222222;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
