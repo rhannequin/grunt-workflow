@@ -117,6 +117,20 @@ module.exports = function (grunt) {
       }
     },
 
+    copy: {
+      font: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['<%= config.local.assets.fonts %>/**'],
+            dest: '<%= config.dist.assets.fonts %>/',
+            filter: 'isFile'
+          }
+        ]
+      }
+    },
+
     connect: {
       server: {
         options: { port: '<%= config.localhost.port %>', base: '<%= config.dist._ %>', hostname: '' }
@@ -153,7 +167,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('styles', ['sass', 'concat:dev'])
   grunt.registerTask('scripts', ['jshint', 'concat:dev'])
-  grunt.registerTask('statics', ['styles', 'scripts'])
+  grunt.registerTask('fonts', ['copy:font'])
+  grunt.registerTask('statics', ['styles', 'scripts', 'fonts'])
 
   grunt.registerTask('dev', ['statics', 'replace:dev', 'connect', 'open:dev', 'watch'])
   grunt.registerTask('build', ['statics', 'replace:build', 'concat:build', 'uglify:build', 'cssmin:build'])

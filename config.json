@@ -10,7 +10,8 @@
       "_": "<%= config.local._ %>/assets",
       "scripts": "<%= config.local.assets._ %>/scripts",
       "styles": "<%= config.local.assets._ %>/styles",
-      "sass": "<%= config.local.assets.styles %>/sass"
+      "sass": "<%= config.local.assets.styles %>/sass",
+      "fonts": "<%= config.local.assets._ %>/fonts"
     }
   },
   "dist": {
@@ -19,7 +20,8 @@
       "_": "<%= config.dist._ %>/assets",
       "scripts": "<%= config.dist.assets._ %>/scripts",
       "styles": "<%= config.dist.assets._ %>/styles",
-      "sass": "<%= config.dist.assets.styles %>/sass"
+      "sass": "<%= config.dist.assets.styles %>/sass",
+      "fonts": "<%= config.dist.assets._ %>/fonts"
     }
   }
 }
