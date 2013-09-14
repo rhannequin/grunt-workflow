@@ -117,14 +117,42 @@ module.exports = function (grunt) {
       }
     },
 
+    imagemin: {
+      compile: {
+        options: {
+          optimizationLevel: 4,
+          progressive: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: '<%= config.dist.assets.images %>',
+            src: ['**/*.{png,jpg,jpeg,gif,svg}'],
+            dest: '<%= config.dist.assets.images %>'
+          }
+        ]
+      }
+    },
+
     copy: {
-      font: {
+      fonts: {
         files: [
           {
             expand: true,
             flatten: true,
             src: ['<%= config.local.assets.fonts %>/**'],
             dest: '<%= config.dist.assets.fonts %>/',
+            filter: 'isFile'
+          }
+        ]
+      },
+      images: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['<%= config.local.assets.images %>/**/*.{png,jpg,jpeg,gif,svg}'],
+            dest: '<%= config.dist.assets.images %>/',
             filter: 'isFile'
           }
         ]
@@ -165,10 +193,11 @@ module.exports = function (grunt) {
 
   })
 
+  grunt.registerTask('images', ['copy:images', 'imagemin'])
   grunt.registerTask('styles', ['sass', 'concat:dev'])
   grunt.registerTask('scripts', ['jshint', 'concat:dev'])
-  grunt.registerTask('fonts', ['copy:font'])
-  grunt.registerTask('statics', ['styles', 'scripts', 'fonts'])
+  grunt.registerTask('fonts', ['copy:fonts'])
+  grunt.registerTask('statics', ['images', 'styles', 'scripts', 'fonts'])
 
   grunt.registerTask('dev', ['statics', 'replace:dev', 'connect', 'open:dev', 'watch'])
   grunt.registerTask('build', ['statics', 'replace:build', 'concat:build', 'uglify:build', 'cssmin:build'])

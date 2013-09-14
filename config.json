@@ -8,6 +8,7 @@
     "_": "app",
     "assets": {
       "_": "<%= config.local._ %>/assets",
+      "images": "<%= config.local.assets._ %>/images",
       "scripts": "<%= config.local.assets._ %>/scripts",
       "styles": "<%= config.local.assets._ %>/styles",
       "sass": "<%= config.local.assets.styles %>/sass",
@@ -18,6 +19,7 @@
     "_": "dist",
     "assets": {
       "_": "<%= config.dist._ %>/assets",
+      "images": "<%= config.dist.assets._ %>/images",
       "scripts": "<%= config.dist.assets._ %>/scripts",
       "styles": "<%= config.dist.assets._ %>/styles",
       "sass": "<%= config.dist.assets.styles %>/sass",
